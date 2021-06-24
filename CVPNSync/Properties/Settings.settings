@@ -1,0 +1,42 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CVPNSync.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="userName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">cs21xxx</Value>
+    </Setting>
+    <Setting Name="passWord" Type="System.String" Scope="User">
+      <Value Profile="(Default)">xxx</Value>
+    </Setting>
+    <Setting Name="syncLocalFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\sync</Value>
+    </Setting>
+    <Setting Name="shareVolumeName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">resource_1423533946.487706.3</Value>
+    </Setting>
+    <Setting Name="private2021VolumeName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">resource_1616998342.961310.3</Value>
+    </Setting>
+    <Setting Name="extensionsList" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.tmp</Value>
+    </Setting>
+    <Setting Name="headsList" Type="System.String" Scope="User">
+      <Value Profile="(Default)">~$</Value>
+    </Setting>
+    <Setting Name="autoLogin" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="autoForceSync" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="autoRealTimeSync" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="autoIntervalSync" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="autoMinimized" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
