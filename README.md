@@ -7,7 +7,7 @@
 ### Installation
 
 Visual Studio 2019でプロジェクトファイルを開き、コンパイルをしてください。
-CVPNSync.exeとDLLファイルが起動に必要になります。
+`CVPNSync.exe`,`HtmlAgilityPack.dll`,`RestSharp.dll`が起動に必要になります。
 
 ### Usage
 
