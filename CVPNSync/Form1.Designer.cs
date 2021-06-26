@@ -67,11 +67,16 @@ namespace CVPNSync
             this.applyButton = new System.Windows.Forms.Button();
             this.loginButton = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.formToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.realTimeSyncFileSystemWatcher)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.consoleTabPage.SuspendLayout();
             this.debugTabPage.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
+            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // consoleTextBox
@@ -412,9 +417,40 @@ namespace CVPNSync
             // 
             // notifyIcon
             // 
+            this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
             this.notifyIcon.Text = "CVPNSync";
             this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon_DoubleClick);
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.formToolStripMenuItem,
+            this.closeToolStripMenuItem});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(105, 70);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+            this.openToolStripMenuItem.Text = "開く";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // formToolStripMenuItem
+            // 
+            this.formToolStripMenuItem.Name = "formToolStripMenuItem";
+            this.formToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+            this.formToolStripMenuItem.Text = "設定";
+            this.formToolStripMenuItem.Click += new System.EventHandler(this.formToolStripMenuItem_Click);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+            this.closeToolStripMenuItem.Text = "閉じる";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -447,6 +483,7 @@ namespace CVPNSync
             this.debugTabPage.PerformLayout();
             this.settingsTabPage.ResumeLayout(false);
             this.settingsTabPage.PerformLayout();
+            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -490,6 +527,10 @@ namespace CVPNSync
         private System.Windows.Forms.Label headLabel;
         private System.Windows.Forms.TextBox extensionsTextBox;
         private System.Windows.Forms.TextBox headsTextBox;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem formToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
     }
 }
 

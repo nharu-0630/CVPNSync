@@ -333,13 +333,6 @@ namespace CVPNSync
             }
         }
 
-        private void notifyIcon_DoubleClick(object sender, EventArgs e)
-        {
-            Visible = true;
-            WindowState = FormWindowState.Normal;
-            notifyIcon.Visible = false;
-        }
-
         private void Form1_Shown(object sender, EventArgs e)
         {
             Visible = false;
@@ -365,6 +358,29 @@ namespace CVPNSync
                 WindowState = FormWindowState.Normal;
                 notifyIcon.Visible = true;
             }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", syncLocalFolder);
+        }
+
+        private void formToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Visible = true;
+            WindowState = FormWindowState.Normal;
+            notifyIcon.Visible = false;
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            notifyIcon.Dispose();
+            Application.Exit();
+        }
+
+        private void notifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", syncLocalFolder);
         }
     }
 
