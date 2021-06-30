@@ -96,6 +96,7 @@ namespace CVPNSync
             // realTimeSyncFileSystemWatcher
             // 
             this.realTimeSyncFileSystemWatcher.EnableRaisingEvents = true;
+            this.realTimeSyncFileSystemWatcher.IncludeSubdirectories = true;
             this.realTimeSyncFileSystemWatcher.NotifyFilter = ((System.IO.NotifyFilters)((((System.IO.NotifyFilters.FileName | System.IO.NotifyFilters.DirectoryName) 
             | System.IO.NotifyFilters.LastWrite) 
             | System.IO.NotifyFilters.LastAccess)));

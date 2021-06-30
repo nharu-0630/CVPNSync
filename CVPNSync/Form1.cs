@@ -128,7 +128,7 @@ namespace CVPNSync
             }
             foreach (CVPNClass.VpnListInfo vpnListInfo in vpnListInfos.Where(s => s.listCategory == "フォルダ"))
             {
-                SyncDirectory(localDirectory +@"\"+ vpnListInfo.listName, vpnDirectory + vpnListInfo.listName);
+                SyncDirectory(localDirectory + @"\" + vpnListInfo.listName, vpnDirectory + vpnListInfo.listName);
             }
         }
 
@@ -172,13 +172,24 @@ namespace CVPNSync
             switch (e.ChangeType)
             {
                 case WatcherChangeTypes.Changed:
-                    WriteConsole("ChangeFile " + localFilePath);
-                    WriteConsole("UploadFile " + localFilePath + " " + vpnFilePath);
-                    WriteDebug(CVPNClass.Upload(vpnFilePath, localFilePath, private2021VolumeName));
+                    if (!File.GetAttributes(localFilePath).HasFlag(FileAttributes.Directory))
+                    {
+                        WriteConsole("ChangeFile " + localFilePath);
+                        WriteConsole("UploadFile " + localFilePath + " " + vpnFilePath);
+                        WriteDebug(CVPNClass.Upload(vpnFilePath, localFilePath, private2021VolumeName));
+                    }
                     break;
                 case WatcherChangeTypes.Created:
-                    WriteConsole("UploadFile " + localFilePath + " " + vpnFilePath);
-                    WriteDebug(CVPNClass.Upload(vpnFilePath, localFilePath, private2021VolumeName));
+                    if (File.GetAttributes(localFilePath).HasFlag(FileAttributes.Directory))
+                    {
+                        WriteConsole("CreateFolder " + localFilePath + " " + vpnFilePath);
+                        WriteDebug(CVPNClass.Create(Path.GetDirectoryName(vpnFilePath), Path.GetFileNameWithoutExtension(vpnFilePath), private2021VolumeName));
+                    }
+                    else
+                    {
+                        WriteConsole("UploadFile " + localFilePath + " " + vpnFilePath);
+                        WriteDebug(CVPNClass.Upload(vpnFilePath, localFilePath, private2021VolumeName));
+                    }
                     break;
                 case WatcherChangeTypes.Deleted:
                     WriteConsole("DeleteFile " + localFilePath + " " + vpnFilePath);
@@ -495,8 +506,18 @@ namespace CVPNSync
             restRequest = new RestRequest();
             restRequest.Method = Method.POST;
             restRequest.AddParameter("v", volumeName);
+            IRestResponse restResponse = restClient.Execute(restRequest);
+            if (restResponse.Content.Contains("The page you requested could not be found.") || restResponse.Content.Contains("You are logged out because you have logged in from another machine"))
+            {
+                Login();
+                restClient.BaseUrl = new Uri("https://vpn.inf.shizuoka.ac.jp/dana/fb/smb/wu.cgi");
+                restRequest = new RestRequest();
+                restRequest.Method = Method.POST;
+                restRequest.AddParameter("v", volumeName);
+                restResponse = restClient.Execute(restRequest);
+            }
             HtmlDocument htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(restClient.Execute(restRequest).Content);
+            htmlDocument.LoadHtml(restResponse.Content);
             string xsauth = htmlDocument.GetElementbyId("xsauth_386").Attributes["value"].Value;
             restClient.BaseUrl = new Uri("https://vpn.inf.shizuoka.ac.jp/dana/fb/smb/wfb.cgi");
             restRequest = new RestRequest();
@@ -516,14 +537,24 @@ namespace CVPNSync
             return restClient.Execute(restRequest).Content;
         }
 
-        public static string Create(string vpnPath,string folderName, string volumeName)
+        public static string Create(string vpnPath, string folderName, string volumeName)
         {
             restClient.BaseUrl = new Uri("https://vpn.inf.shizuoka.ac.jp/dana/fb/smb/wu.cgi");
             restRequest = new RestRequest();
             restRequest.Method = Method.POST;
             restRequest.AddParameter("v", volumeName);
+            IRestResponse restResponse = restClient.Execute(restRequest);
+            if (restResponse.Content.Contains("The page you requested could not be found.") || restResponse.Content.Contains("You are logged out because you have logged in from another machine"))
+            {
+                Login();
+                restClient.BaseUrl = new Uri("https://vpn.inf.shizuoka.ac.jp/dana/fb/smb/wu.cgi");
+                restRequest = new RestRequest();
+                restRequest.Method = Method.POST;
+                restRequest.AddParameter("v", volumeName);
+                restResponse = restClient.Execute(restRequest);
+            }
             HtmlDocument htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(restClient.Execute(restRequest).Content);
+            htmlDocument.LoadHtml(restResponse.Content);
             string xsauth = htmlDocument.GetElementbyId("xsauth_386").Attributes["value"].Value;
             restClient.BaseUrl = new Uri("https://vpn.inf.shizuoka.ac.jp/dana/fb/smb/wnf.cgi");
             restRequest = new RestRequest();
