@@ -128,7 +128,7 @@ namespace CVPNSync
             }
             foreach (CVPNClass.VpnListInfo vpnListInfo in vpnListInfos.Where(s => s.listCategory == "フォルダ"))
             {
-                SyncDirectory(localDirectory + vpnListInfo.listName, vpnDirectory + vpnListInfo.listName);
+                SyncDirectory(localDirectory +@"\"+ vpnListInfo.listName, vpnDirectory + vpnListInfo.listName);
             }
         }
 
@@ -513,6 +513,33 @@ namespace CVPNSync
             restRequest.AddParameter("dir", Path.GetDirectoryName(vpnPath));
             restRequest.AddParameter("files", vpnPath);
             restRequest.AddParameter("ignoreDfs", "1");
+            return restClient.Execute(restRequest).Content;
+        }
+
+        public static string Create(string vpnPath,string folderName, string volumeName)
+        {
+            restClient.BaseUrl = new Uri("https://vpn.inf.shizuoka.ac.jp/dana/fb/smb/wu.cgi");
+            restRequest = new RestRequest();
+            restRequest.Method = Method.POST;
+            restRequest.AddParameter("v", volumeName);
+            HtmlDocument htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(restClient.Execute(restRequest).Content);
+            string xsauth = htmlDocument.GetElementbyId("xsauth_386").Attributes["value"].Value;
+            restClient.BaseUrl = new Uri("https://vpn.inf.shizuoka.ac.jp/dana/fb/smb/wnf.cgi");
+            restRequest = new RestRequest();
+            restRequest.Method = Method.POST;
+            restRequest.AddParameter("xsauth", xsauth);
+            restRequest.AddParameter("folder", folderName);
+            restRequest.AddParameter("create", "フォルダの作成");
+            restRequest.AddParameter("action", "create");
+            restRequest.AddParameter("t", "p");
+            restRequest.AddParameter("v", volumeName);
+            restRequest.AddParameter("si", "");
+            restRequest.AddParameter("ri", "");
+            restRequest.AddParameter("pi", "");
+            restRequest.AddParameter("dir", vpnPath);
+            restRequest.AddParameter("ignoreDfs", "1");
+            restRequest.AddParameter("confirm", "yes");
             return restClient.Execute(restRequest).Content;
         }
 
