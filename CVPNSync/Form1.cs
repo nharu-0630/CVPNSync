@@ -66,6 +66,10 @@ namespace CVPNSync
             launchCheckedListBox.SetItemChecked(2, autoRealTimeSync);
             launchCheckedListBox.SetItemChecked(3, autoIntervalSync);
             launchCheckedListBox.SetItemChecked(4, autoMinimized);
+            if (!Directory.Exists(syncLocalFolder))
+            {
+                Directory.CreateDirectory(syncLocalFolder);
+            }
             realTimeSyncFileSystemWatcher.Path = syncLocalFolder;
             realTimeSyncFileSystemWatcher.SynchronizingObject = this;
         }
